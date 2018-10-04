@@ -47,13 +47,13 @@ void Autocompleter::insert_recurse(Entry e, Node*root){
             insert_recurse(e, root->right);
             
         }
-        else{
+        else{ //duplicate do nothing
             return;
         }
+        update_height(root);
+        rebalance(root);
     }
-    rebalance(root);
 }
-
 
 int Autocompleter::sub_height(Node* root){
     if(root == NULL){
@@ -70,40 +70,40 @@ void Autocompleter::update_height(Node* root){
 
 
 void Autocompleter::rebalance(Node* root){
-    while(root != NULL){
-        update_height(root);
-        // if the left is greater
-        if (root->left->height >= 2 + root->right->height){
-            if(root->left->left >= root->left->right){ //single right rotation
-                right_rotate(root);
-            }
-            else{ // left-right rotation
-                left_rotate(root);
-                right_rotate(root);
-            }
+
+    // if the left is greater
+    if (root->left->height >= 2 + root->right->height){
+        if(root->left->left >= root->left->right){ //single right rotation
+            right_rotate(root);
         }
-        else if(root->right->height >= 2 + root->left->height){
-            if(root->right->height >= 2 + root->left->height){
-                if(root->right->right >= root->right->left){
-                    left_rotate(root);
-                }
-                else{ //right-left rotation
-                    right_rotate(root);
-                    left_rotate(root);
-                }
-            }
+        else{ // left-right rotation
+            left_rotate(root->left);
+            right_rotate(root);
         }
-//       root = root->
     }
-    
+    else if(root->right->height >= 2 + root->left->height){
+        if(root->right->right >= root->right->left){
+            left_rotate(root);
+        }
+        else{ //right-left rotation
+            right_rotate(root->right);
+            left_rotate(root);
+        }
+    }
 }
 
 void Autocompleter::right_rotate(Node* root){
-    
+    Node* p = root->left;
+    root->left = p->right;
+    p->right = root;
+//    root = p;
 }
 
 void Autocompleter::left_rotate(Node* root){
-    
+    Node* p = root->right;
+    root->right = p->left;
+    p->left = root;
+    //    root = p;
 }
 
 
