@@ -103,7 +103,7 @@ class Autocompleter
 		// Inserts an Entry into an AVL tree rooted at root.
 		//
 		// Should run in O(log(n)) time.
-		void insert_recurse(Entry e, Node* root);
+		void insert_recurse(Entry e, Node*& root);
 
 		// Rebalances the AVL tree rooted at root.
 		// Helpful for insert(). 
@@ -111,13 +111,13 @@ class Autocompleter
 		// the search in reverse search order.
 		// 
 		// Should run in O(1) time. 
-		void rebalance(Node* root);    
+		void rebalance(Node* root);
 
 		// Perform left and right rotations around the root
 		// of an AVL tree (helpful for implementing rebalance).
 		//
 		// Should run in O(1) time.
-		void right_rotate(Node* root); 
+		void right_rotate(Node* root);
 		void left_rotate(Node* root);
     
     

@@ -82,9 +82,10 @@ void Autocompleter::completions_recurse(string x, Node* root, vector<Entry> &T){
     }
 }
 
-void Autocompleter::insert_recurse(Entry e, Node*root){
+void Autocompleter::insert_recurse(Entry e, Node*&root){
     if (root == NULL){
         root = new Node(e);
+    
     }
     else{
         if(root->e.s > e.s){
@@ -121,7 +122,7 @@ void Autocompleter::rebalance(Node* root){
 
     // if the left is greater
     if (root->left->height >= 2 + root->right->height){
-        if(root->left->left >= root->left->right){ //single right rotation
+        if(root->left->left->height >= root->left->right->height){ //single right rotation
             right_rotate(root);
         }
         else{ // left-right rotation
@@ -130,7 +131,7 @@ void Autocompleter::rebalance(Node* root){
         }
     }
     else if(root->right->height >= 2 + root->left->height){
-        if(root->right->right >= root->right->left){
+        if(root->right->right->height >= root->right->left->height){
             left_rotate(root);
         }
         else{ //right-left rotation
