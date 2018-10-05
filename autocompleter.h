@@ -90,7 +90,7 @@ class Autocompleter
 		// Returns the size of the binary tree rooted at root.
 		//
 		// Should run in O(n) time.
-		int size_recurse(Node* root);
+		int size_recurse(Node* &root);
 
 		// Fills C with the completions of x in the BST rooted at root.
 		//
@@ -111,14 +111,14 @@ class Autocompleter
 		// the search in reverse search order.
 		// 
 		// Should run in O(1) time. 
-		void rebalance(Node* root);
+		void rebalance(Node*& root);
 
 		// Perform left and right rotations around the root
 		// of an AVL tree (helpful for implementing rebalance).
 		//
 		// Should run in O(1) time.
-		void right_rotate(Node* root);
-		void left_rotate(Node* root);
+		void right_rotate(Node*& root);
+		void left_rotate(Node*& root);
     
     
         int sub_height(Node* root);

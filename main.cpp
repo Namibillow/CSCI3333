@@ -70,7 +70,9 @@ int main()
 
 	animals.insert("aardvark", 629356);
 	animals.insert("albatross", 553191);
+    cout << "SIZe IS " << animals.size() << endl;
 	animals.insert("alpaca", 852363);
+    cout << "SIZe IS " << animals.size() << endl;
 	animals.insert("armadillo", 393754);
 	animals.insert("crow", 4592109);
 	animals.insert("crocodile", 1658300);

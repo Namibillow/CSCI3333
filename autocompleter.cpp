@@ -39,7 +39,7 @@ void Autocompleter::completions(string x, vector<string> &T){
                 max_i = j;
             }
         }
-        //        cout << TE[max_i].s  << " : " <<TE[max_i].freq << endl;
+        
         T.push_back(TE[max_i].s);
         
         temp = TE[top_three];
@@ -54,7 +54,7 @@ void Autocompleter::completions(string x, vector<string> &T){
     }
 }
 
-int Autocompleter::size_recurse(Node* root){
+int Autocompleter::size_recurse(Node*& root){
     if(root== NULL)
         return 0;
     else
@@ -73,7 +73,6 @@ void Autocompleter::completions_recurse(string x, Node* root, vector<Entry> &T){
     else if(root->e.s > x){
         completions_recurse(x, root->left, T);
     }
-    
     else if(root->e.s < x){
         completions_recurse(x, root->right, T);
     }
@@ -84,17 +83,15 @@ void Autocompleter::completions_recurse(string x, Node* root, vector<Entry> &T){
 
 void Autocompleter::insert_recurse(Entry e, Node*&root){
     if (root == NULL){
+        cout << "inserting: " << e.s << endl;
         root = new Node(e);
-    
     }
     else{
         if(root->e.s > e.s){
             insert_recurse(e, root->left);
-            
         }
         else if(root->e.s < e.s){
             insert_recurse(e, root->right);
-            
         }
         else{ //duplicate do nothing
             return;
@@ -117,12 +114,11 @@ void Autocompleter::update_height(Node* root){
     root->height =  1 + max(sub_height(root->left), sub_height(root->right));
 }
 
-
-void Autocompleter::rebalance(Node* root){
-
+void Autocompleter::rebalance(Node*& root){
+   
     // if the left is greater
-    if (root->left->height >= 2 + root->right->height){
-        if(root->left->left->height >= root->left->right->height){ //single right rotation
+    if (sub_height(root->left) >= 2 + sub_height(root->right)){
+        if(sub_height(root->left->left) >= sub_height(root->left->right)){ //single right rotation
             right_rotate(root);
         }
         else{ // left-right rotation
@@ -130,8 +126,9 @@ void Autocompleter::rebalance(Node* root){
             right_rotate(root);
         }
     }
-    else if(root->right->height >= 2 + root->left->height){
-        if(root->right->right->height >= root->right->left->height){
+    else if(sub_height(root->right) >= 2 + sub_height(root->left)){
+        cout << "this is root: " <<  root->e.s << endl;
+        if(sub_height(root->right->right) >= sub_height(root->right->left)){
             left_rotate(root);
         }
         else{ //right-left rotation
@@ -141,24 +138,32 @@ void Autocompleter::rebalance(Node* root){
     }
 }
 
-void Autocompleter::right_rotate(Node* root){
+void Autocompleter::right_rotate(Node*& root){
     Node* p = root->left;
-    root->left = p->right;
-    p->right = root;
-    
-    //needs to update the height
-    root = p;
+    Node* t = p->right;
+    p->right= root;
+    root->left = t;
     update_height(root);
     update_height(p);
+    root = p;
 }
 
-void Autocompleter::left_rotate(Node* root){
+void Autocompleter::left_rotate(Node*& root){
+//    cout << "this is left root :" << root->e.s << endl; //aardvark
+//    cout << "this is right of root :" << root->right->e.s << endl; //albatros
+    
     Node* p = root->right;
-    root->right = p->left;
+    Node* t = p->left;
+//    cout << "this is p of left :" << t << endl; //null
+    
     p->left = root;
-    //    root = p;
+    root->right = t;
+    
+//    cout << "this is p->left: aar" << p->left->e.s << endl;
+//    cout << "root->right is null " << root->right << endl;
     update_height(root);
     update_height(p);
+    root = p;
 }
 
 
