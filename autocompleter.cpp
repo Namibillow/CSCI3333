@@ -1,3 +1,4 @@
+//HwAC2 Nami Akazawa
 #include <iostream>
 #include "autocompleter.h"
 using namespace std;
@@ -83,7 +84,7 @@ void Autocompleter::completions_recurse(string x, Node* root, vector<Entry> &T){
 
 void Autocompleter::insert_recurse(Entry e, Node*&root){
     if (root == NULL){
-        cout << "inserting: " << e.s << endl;
+//        cout << "inserting: " << e.s << endl;
         root = new Node(e);
     }
     else{
@@ -127,7 +128,7 @@ void Autocompleter::rebalance(Node*& root){
         }
     }
     else if(sub_height(root->right) >= 2 + sub_height(root->left)){
-        cout << "this is root: " <<  root->e.s << endl;
+//        cout << "this is root: " <<  root->e.s << endl;
         if(sub_height(root->right->right) >= sub_height(root->right->left)){
             left_rotate(root);
         }
